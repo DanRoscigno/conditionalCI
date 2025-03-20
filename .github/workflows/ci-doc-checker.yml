@@ -115,43 +115,9 @@ jobs:
             # open-source and Bare-Metal docs go in workingdir/docs
             mkdir -p workingdir/docs
             cp -r docs/en/* workingdir/docs
-            rm -rf workingdir/docs/deployment
-            rm workingdir/docs/introduction/what_is_starrocks.md
-            rm -rf workingdir/docs/quick_start
-            rm -rf workingdir/docs/benchmarking
-            rm -rf workingdir/docs/developers
-            rm -rf workingdir/docs/project_help
-            mkdir workingdir/docs/deployment
-            rm workingdir/docs/data_source/iceberg*
-            rm -rf workingdir/docs/cover_pages
-            rm -rf workingdir/docs/release_notes
-            rm -rf workingdir/docs/ecosystem_release
-            rm workingdir/docs/data_source/icebergtutorial.mdx
-            rm workingdir/docs/introduction/StarRocks_intro.md
-            rm workingdir/docs/administration/stargo.md
-            rm -rf workingdir/docs/integrations/other_integrations
-            rm workingdir/docs/integrations/streaming.mdx
-            rm workingdir/docs/loading/Json_loading.md
-            rm workingdir/docs/loading/loading.mdx
-            rm workingdir/docs/loading/loading_introduction/loading_overview.mdx
-            rm workingdir/docs/loading/objectstorage.mdx
-            rm workingdir/docs/unloading/unloading.mdx
             cp -r docs/docusaurus/* workingdir/
 
-            cp -r \
-            docs/enterprise-edition/bare-metal/docusaurus/docusaurus.config.js \
-            docs/enterprise-edition/bare-metal/docusaurus/package.json \
-            docs/enterprise-edition/bare-metal/docusaurus/yarn.lock \
-            docs/enterprise-edition/bare-metal/docusaurus/babel.config.js \
-            docs/enterprise-edition/bare-metal/docusaurus/sidebars.js* \
-            docs/enterprise-edition/bare-metal/docusaurus/src \
-            docs/enterprise-edition/bare-metal/docusaurus/static \
-            workingdir/
-
             rsync -avhrW --progress ./docs/enterprise-edition/bare-metal/docs workingdir/docs/
-            cp docs/en/deployment/plan_cluster.md workingdir/docs/deployment/15_plan_cluster.md
-
-            rsync -avhrW --progress ./docs/enterprise-edition/docusaurus/* workingdir/
 
             find workingdir/docs -name "*.md*" | xargs -d "\n" sed -i "s/displayed_sidebar:.*//"
   
