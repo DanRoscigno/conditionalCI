@@ -1,0 +1,39 @@
+name: CI DOC Checker
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - main
+      - 'branch*'
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          kubernetes:
+            - 'docs/enterprise-edition/kubernetes/**'
+          bare-metal:
+            - 'docs/enterprise-edition/bare-metal/**'
+
+    # run only if 'kubernetes' files were changed
+    - name: kubernetes tests
+      if: steps.filter.outputs.kubernetes == 'true'
+      run: echo "in kubernetes flow"
+
+    # run only if 'bare-metal' files were changed
+    - name: bare-metal tests
+      if: steps.filter.outputs.bare-metal == 'true'
+      run: echo "in bare-metal flow"
+
+    # run if 'kubernetes' or 'bare-metal' files were changed
+    - name: e2e tests
+      if: steps.filter.outputs.kubernetes == 'true' || steps.filter.outputs.bare-metal == 'true'
+      run: echo "in common flow"
+
